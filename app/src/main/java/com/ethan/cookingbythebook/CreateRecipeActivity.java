@@ -26,25 +26,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class CreateRecipeActivity extends AppCompatActivity {
 
 
     //Declaring All The Variables Needed
-
+    String[] recipe;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ScreenSlidePagerAdapter viewPagerAdapter;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,9 +134,6 @@ public class CreateRecipeActivity extends AppCompatActivity {
                 }
         );
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -178,46 +174,6 @@ public class CreateRecipeActivity extends AppCompatActivity {
      * The pager adapter, which provides the pages to the view pager widget.
      */
     private PagerAdapter mPagerAdapter;
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "CreateRecipe Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.ethan.cookingbythebook/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "CreateRecipe Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.ethan.cookingbythebook/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
-    }
 
     /**
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
@@ -262,7 +218,7 @@ public class CreateRecipeActivity extends AppCompatActivity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
             ViewGroup rootView = null;
 
@@ -272,19 +228,50 @@ public class CreateRecipeActivity extends AppCompatActivity {
             }
 
             if (fragmentType.equals("addIngredients")) {
+                final List<LinearLayout> ingredientLines=null;
                 rootView = (ViewGroup) inflater.inflate(
                         R.layout.content_add_ingredients, container, false);
                 FloatingActionButton ingredientAdd = (FloatingActionButton) rootView.findViewById(R.id.ingredientAdd);
                 final ViewGroup finalRootView = rootView;
                 ingredientAdd.setOnClickListener(new View.OnClickListener() {
+                    int ingredientLine=0;
+
                     @Override
                     public void onClick(View view) {
-                        FrameLayout ll = (FrameLayout) finalRootView.findViewById(R.id.ingredientAddContent);
+                        LinearLayout ll = (LinearLayout) finalRootView.findViewById(R.id.ingredientAddContent);
 
-                        EditText editText = new EditText(getActivity());
+                        LinearLayout editText = (LinearLayout) inflater.inflate(R.layout.content_add_ingredient_line, container, false);
 
-                        editText.setText("Hello");
+                        editText.setId(ingredientLine);
+                        ingredientLine=ingredientLine+1;
+
+
+
+                        //ingredientLines.add(editText);
+
+
+                        //EditText editText = new EditText(getActivity());
+                        //editText.setText("HellolHellollllllllHellollllllll");
                         ll.addView(editText);
+
+                        int x;
+
+                        for (x=0;x<ingredientLine;x++){
+
+                            LinearLayout ingredientll = (LinearLayout) ll.findViewById(x);
+                            EditText unitNumberView = (EditText) ingredientll.findViewById(R.id.unitNumber);
+                            recipe["unitNumber"][x] = String.valueOf(unitNumberView.getText());
+                            Log.d("Cooking",unitNumber);
+
+                        }
+/*
+                        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) editText.getLayoutParams();
+                        layoutParams.width = LinearLayout.LayoutParams.MATCH_PARENT;
+                        layoutParams.setMargins(0, 0, 0, 0);
+                        layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                        editText.setLayoutParams(layoutParams);
+*/
+
                     }
                 });
 

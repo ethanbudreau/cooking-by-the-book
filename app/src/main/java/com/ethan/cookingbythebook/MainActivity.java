@@ -33,6 +33,6 @@ public class MainActivity extends AppCompatActivity {
         String username = usernameField.getText().toString();
         String password = passwordField.getText().toString();
         Log.d("DEBUG_COOKING_BY_THE_BOOK", "RETURN_VALUE2");
-        new SigninActivity(this,1).execute(username,password);
+        new SigninActivity(this,0).execute(username,password);
     }
 }

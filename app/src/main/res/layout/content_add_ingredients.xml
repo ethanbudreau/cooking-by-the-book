@@ -1,21 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ingredientAddContent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
     <TextView style="?android:textAppearanceMedium"
         android:padding="16dp"
+        android:id="@+id/addIngredientsHeader"
         android:lineSpacingMultiplier="1.2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add ingredients" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/ingredientAdd"
-        android:layout_width="wrap_content"
+<!--    <ListView
+        android:id="@+id/ingredientListView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+    </ListView>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="10dp"
-        android:src="@android:drawable/ic_dialog_email" />
-</FrameLayout>
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/buttonLayout">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/ingredientAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_add_white_24dp"/>
+    </LinearLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/buttonLayout"
+        android:layout_below="@id/addIngredientsHeader"
+        android:isScrollContainer="true">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ingredientAddContent">
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>

@@ -35,13 +35,16 @@ public class SigninActivity  extends AsyncTask<String,Void,String>{
     @Override
     protected String doInBackground(String... arg0) {
 
-        if(byGetOrPost == 1){ //means by Get Method
+        if (byGetOrPost == 0){
+            return "1";
+        }
+        else{ //means by Get Method
             InputStream is = null;
             int len=500;
             try{
                 Log.d("DEBUG_COOKING_BY_THE_BOOK", "RETURN_VALUE6");
-                String username = (String)arg0[0];
-                String password = (String)arg0[1];
+                String username = arg0[0];
+                String password = arg0[1];
                 String link = "http://myphpmysqlweb.hostei.com/login.php?username="+username+"& password="+password;
                 Log.d("DEBUG_COOKING_BY_THE_BOOK", "RETURN_VALUE5");
 /*
@@ -100,7 +103,7 @@ public class SigninActivity  extends AsyncTask<String,Void,String>{
                 return new String("Exception: " + e.getMessage());
             }
         }
-        else{
+/*        else{
             try{
                 String username = (String)arg0[0];
                 String password = (String)arg0[1];
@@ -134,7 +137,7 @@ public class SigninActivity  extends AsyncTask<String,Void,String>{
             catch(Exception e){
                 return new String("Exception: " + e.getMessage());
             }
-        }
+        }*/
     }
 
     @Override
@@ -144,7 +147,7 @@ public class SigninActivity  extends AsyncTask<String,Void,String>{
         context.startActivity(intent);
     }
 
-    public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
+    public String readIt(InputStream stream, int len) throws IOException {
         Reader reader = null;
         reader = new InputStreamReader(stream, "UTF-8");
         char[] buffer = new char[len];
